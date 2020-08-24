@@ -9,7 +9,7 @@ struct Pixel
     uint8_t red;
     uint8_t green;
     uint8_t blue;
-    uint8_t aisle;
+    uint8_t alpha;
 
     std::string ConvertToString() const 
     {
@@ -17,7 +17,7 @@ struct Pixel
         context.push_back(static_cast<char>(red));
         context.push_back(static_cast<char>(green));
         context.push_back(static_cast<char>(blue));
-        context.push_back(static_cast<char>(aisle));
+        context.push_back(static_cast<char>(alpha));
         return context;
     }
 };
@@ -52,7 +52,7 @@ public:
             screen[screen_index].red = static_cast<uint8_t>(buffer[buffer_index]);
             screen[screen_index].green = static_cast<uint8_t>(buffer[buffer_index + 1]);
             screen[screen_index].blue = static_cast<uint8_t>(buffer[buffer_index + 2]);
-            screen[screen_index].aisle = static_cast<uint8_t>(buffer[buffer_index + 3]);
+            screen[screen_index].alpha = static_cast<uint8_t>(buffer[buffer_index + 3]);
         }
         return screen;
     }
