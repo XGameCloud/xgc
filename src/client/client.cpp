@@ -10,7 +10,7 @@ using boost::asio::buffer;
 using std::cout;
 using std::endl;
 using std::vector;
-int main()
+int client()
 {
     cout<<"client start."<<endl;
     io_service ios;

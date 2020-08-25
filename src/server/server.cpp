@@ -27,7 +27,7 @@ public:
     static list<RelationUint> ConnectList;//装有现有连接
     RelationUint createConnect();
 };
-int main()
+int server()
 {
     io_service ios;
     tcp::acceptor ap(ios,tcp::endpoint(tcp::v4(),7777));
