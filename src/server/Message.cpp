@@ -4,8 +4,8 @@ using message::ControlType;
 Message::Message(ControlType conrtol_word,size_t message_number,
                  unsigned int sender_identity,unsigned int receiver_identity,
                  std::string data):
-    control_word_(conrtol_word),message_number_(message_number),
-    sender_identity_(sender_identity),receiver_identity_(receiver_identity),data_(data){
+        control_word_(conrtol_word),message_number_(message_number),
+        sender_identity_(sender_identity),receiver_identity_(receiver_identity),data_(data){
     CalculateDataSize();
     CalculateCheckSum();
 }

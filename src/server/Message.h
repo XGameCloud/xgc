@@ -9,7 +9,11 @@ enum class ControlType : uint8_t
 {
     kVideo,
     kVoice,
-    kOpintion
+    kOpintion,
+    kLogin,
+    kLogout,
+    kAck,
+    kSendPort
 };
 class Message
 {
