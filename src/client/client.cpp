@@ -1,3 +1,4 @@
+#include "client.h"
 #include <boost/lexical_cast.hpp>
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/asio.hpp>
@@ -10,7 +11,13 @@ using boost::asio::buffer;
 using std::cout;
 using std::endl;
 using std::vector;
-static const std::string kServerIp="49.232.17.128";
+class Client
+{
+public:
+    Client();
+    void Init(void );
+    
+};
 int client()
 {
     cout<<"client start."<<endl;
@@ -19,12 +26,11 @@ int client()
     address addr=addr.from_string(kServerIp);
     assert(addr.is_v4());
     cout<<addr.to_string()<<endl;
-    tcp::endpoint ep(addr,7777);
+    tcp::endpoint ep(addr,kListenPort);
     tcp_socket.connect(ep);
     vector<char> str(100,0);
     tcp_socket.read_some(buffer(str));
     cout<<"recive from ip:"<<tcp_socket.remote_endpoint().address()<<"\t port:"<<tcp_socket.remote_endpoint().port()<<endl;
-    
     cout<<"recive :"<<&str[0]<<endl;
     tcp_socket.close();
     return 0;

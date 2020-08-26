@@ -1,8 +1,10 @@
-#ifndef SERIALIZATION_H
-#define SERIALIZATION_H
+#ifndef XGC_MESSAGE_TOOLS_SERIALIZATION_H
+#define XGC_MESSAGE_TOOLS_SERIALIZATION_H
 #include<string>
 #include<iostream>
 #include "Message.h"
+namespace xgc::message_tools
+{
 class Serialization
 {
 public:
@@ -10,4 +12,5 @@ public:
     static Message disSerialize(const std::string msg);
 
 };
+}
 #endif

@@ -3,7 +3,7 @@
 #include <boost/archive/text_iarchive.hpp>
 #include <sstream>
 #include "Message.h"
-using message::Message;
+using xgc::message_tools::Message;
 std::string Serialization::serialize(const Message &msg)
 {
     std::ostringstream os;

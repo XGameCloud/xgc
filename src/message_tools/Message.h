@@ -1,9 +1,9 @@
-#ifndef XGC_SERVER_MESSAGE_H
-#define XGC_SERVER_MESSAGE_H
+#ifndef XGC_MESSAGE_TOOLS_MESSAGE_H
+#define XGC_MESSAGE_TOOLS_MESSAGE_H
 #include<stdint.h>
 #include<string>
 #include<string>
-namespace message
+namespace xgc::message_tools
 {
 enum class ControlType : uint8_t
 {
