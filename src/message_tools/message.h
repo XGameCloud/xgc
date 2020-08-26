@@ -19,12 +19,20 @@ class Message
 {
 public:
     Message ();
+    explicit Message(ControlType control_word);
     Message(ControlType conrtol_word,
             size_t message_number,
             unsigned int sender_identity,
             unsigned int receiver_identity,
             std::string data);
+    void SetControlWord(ControlType control_word);
+    void SetSenderIdentity(unsigned int sender_identity);
+    void SetReceiverIdentity(unsigned int receiver_identity); 
     void SetMessageData(std::string data);
+    ControlType GetControlWord(void);
+    std::string GetMessageData(void);
+    unsigned int GetSenderIdentity(void);
+    unsigned int GetReceiverIdentity(void);
     template<class Archive>
     void serialize(Archive&ar,const uint version);
 
@@ -40,7 +48,8 @@ private:
     std::string data_;  // 数据信息
 
 };
-
+Message ack_message(ControlType::kAck);
+Message make_ack();
 } 
 //typedef enum{Control,Info,Debug,Warning,Error} MSGTYPE;
 // class Message

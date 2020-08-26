@@ -9,7 +9,11 @@
 #include <vector>
 #include <list>
 #include "config.h"
+#include "serialization.h"
+#include "message.h"
 using xgc::server::Server;
+using namespace xgc::message_tools;
+using xgc::message_tools::Serialization;
 using boost::asio::ip::tcp;
 using boost::asio::ip::address;
 using boost::asio::io_service;
@@ -52,23 +56,21 @@ void Server::WaitforConnect()
 {
 
     xgclog<<"server listening for "<<server_ip_<<":"<<server_listen_port_<<xgcendl;
+    xgclog<<"max listen is "<<tcp_socket_.max_listen_connections<<xgcendl;
     server_acceptor_.accept(tcp_socket_);
     xgclog<<"client:ip:"<<tcp_socket_.remote_endpoint().address()<<"\tport:"<<tcp_socket_.remote_endpoint().port()<<xgcendl;
-}
-int server()
-{
-    io_service ios;
-    
-    cout<<ap.local_endpoint().address()<<endl;
-    while(true)
+    tcp_socket_.write_some(buffer(Serialization::serialize(ack_message)));
+    string msg;
+    tcp_socket_.read_some(buffer(msg));
+    Message r_message=Serialization::disSerialize(msg);
+    if(r_message.GetControlWord==ControlType::kAck)
     {
-        tcp::socket sock(ios);
-        ap.accept(sock);
-        cout<<"client:ip:"<<sock.remote_endpoint().address()<<"\tport:"<<sock.remote_endpoint().port()<<endl;
-        cout<<"max listen is "<<sock.max_listen_connections<<endl;
-        sock.write_some(buffer("hello asio"));
+        xgclog<<"socket has been connected."<<xgcendl;
     }
-    //当收到一个socket的连接时，服务端要发出一个端口号，用于新建连接
-
-    return 0;
+    else
+    {
+        xgclog<<"connection error."<<xgcendl;
+    }
+    
+    tcp_socket_.write_some(buffer("hello asio"));
 }

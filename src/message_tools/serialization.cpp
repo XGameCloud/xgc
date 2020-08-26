@@ -1,8 +1,8 @@
-#include "Serialization.h"
+#include "serialization.h"
 #include <boost/archive/text_oarchive.hpp>
 #include <boost/archive/text_iarchive.hpp>
 #include <sstream>
-#include "Message.h"
+#include "message.h"
 using xgc::message_tools::Message;
 using xgc::message_tools::Serialization;
 std::string Serialization::serialize(const Message &msg)
@@ -12,7 +12,7 @@ std::string Serialization::serialize(const Message &msg)
     archive<<msg;
     return os.str();
 }
-Message Serialization::disSerialize(const std::string message)
+ Message Serialization::disSerialize(const std::string message)
 {
     Message msg;
     std::istringstream is(message);
