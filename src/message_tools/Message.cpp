@@ -1,6 +1,6 @@
 #include "Message.h"
-using message::Message;
-using message::ControlType;
+using xgc::message_tools::Message;
+using xgc::message_tools::ControlType;
 Message::Message(ControlType conrtol_word,size_t message_number,
                  unsigned int sender_identity,unsigned int receiver_identity,
                  std::string data):

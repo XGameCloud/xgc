@@ -4,6 +4,7 @@
 #include <sstream>
 #include "Message.h"
 using xgc::message_tools::Message;
+using xgc::message_tools::Serialization;
 std::string Serialization::serialize(const Message &msg)
 {
     std::ostringstream os;

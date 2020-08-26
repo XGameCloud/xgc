@@ -1,3 +1,4 @@
+#include "server.h"
 #include <boost/lexical_cast.hpp>
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/asio.hpp>
@@ -7,8 +8,10 @@
 #include <iostream>
 #include <vector>
 #include <list>
-
+#include "config.h"
+using xgc::server::Server;
 using boost::asio::ip::tcp;
+using boost::asio::ip::address;
 using boost::asio::io_service;
 using boost::asio::buffer;
 using namespace std;
@@ -27,10 +30,35 @@ public:
     static list<RelationUint> ConnectList;//装有现有连接
     RelationUint createConnect();
 };
+
+Server::Server(std::string ip=kServerIp,int port=kListenPort)
+        :ios_(),tcp_socket_(ios_),
+        server_ip_(server_ip_.from_string(ip)),
+        server_listen_port_(port),
+        server_endpoint_(server_ip_,server_listen_port_),
+        server_acceptor_(ios_,server_endpoint_){
+    xgclog<<"server constrcuting."<<xgcendl;
+    xgclog<<"server constructed."<<xgcendl;
+
+}
+void Server::Init()
+{
+    xgclog<<"server init."<<xgcendl;
+    xgclog<<"server init success."<<xgcendl;
+
+}
+
+void Server::WaitforConnect()
+{
+
+    xgclog<<"server listening for "<<server_ip_<<":"<<server_listen_port_<<xgcendl;
+    server_acceptor_.accept(tcp_socket_);
+    xgclog<<"client:ip:"<<tcp_socket_.remote_endpoint().address()<<"\tport:"<<tcp_socket_.remote_endpoint().port()<<xgcendl;
+}
 int server()
 {
     io_service ios;
-    tcp::acceptor ap(ios,tcp::endpoint(tcp::v4(),7777));
+    
     cout<<ap.local_endpoint().address()<<endl;
     while(true)
     {
