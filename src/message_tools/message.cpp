@@ -1,9 +1,23 @@
 #include "message.h"
 using xgc::message_tools::Message;
 using xgc::message_tools::ControlType;
+Message::Message()
+{
+    control_word_=ControlType::kAck;
+    data_size_=10;  
+    message_number_=20;  
+    sender_identity_=30;  
+    receiver_identity_=40;  
+    check_sum_=50;
+    data_="sasdasd";
+
+}
 Message::Message(ControlType control_word):control_word_(control_word)
 {
-    data_="\0";
+    message_number_=10;
+    sender_identity_=20;
+    receiver_identity_=30;
+    data_="null";
     CalculateDataSize();
     CalculateCheckSum();
 }
@@ -71,34 +85,4 @@ void Message::CalculateCheckSum(){
     check_sum_=0;
 
 }
-template<class Archive>
-void Message::serialize(Archive &ar,const uint version)
-{
-    ar & control_word_ & data_size_ & message_number_ & sender_identity_ &
-         receiver_identity_ & check_sum_ & data_ ;
-}
 
-
-// Message::Message(std::string time,MSGTYPE type,std::string moudle,std::string data)
-// {
-//     set(time,type,moudle,data);
-// }
-// Message::Message()
-// {
-//     MSGTYPE type;
-//     type=MSGTYPE::Info;
-//     set(0,type,"null","null");
-// }
-// void Message::set(std::string time,MSGTYPE type,std::string moudle,std::string data)
-// {
-//     this->time=time;
-//     this->type=type;
-//     this->moudle=moudle;
-//     this->data=data;
-// }
-
-// template<class Archive>
-// void Message::serialize(Archive &ar,const uint version)
-// {
-//     ar &time &type &moudle &data;
-// }

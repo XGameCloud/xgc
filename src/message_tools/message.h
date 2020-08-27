@@ -1,8 +1,11 @@
 #ifndef XGC_MESSAGE_TOOLS_MESSAGE_H
 #define XGC_MESSAGE_TOOLS_MESSAGE_H
+#include <boost/archive/text_oarchive.hpp> 
+#include <boost/archive/text_iarchive.hpp> 
 #include<stdint.h>
 #include<string>
 #include<string>
+#include<boost/serialization/access.hpp>
 namespace xgc::message_tools
 {
 enum class ControlType : uint8_t
@@ -35,8 +38,10 @@ public:
     unsigned int GetReceiverIdentity(void);
     template<class Archive>
     void serialize(Archive&ar,const uint version);
+    
 
 private:
+    friend class boost::serialization::access;
     void CalculateCheckSum(void);
     void CalculateDataSize(void);
     ControlType control_word_;
@@ -46,23 +51,14 @@ private:
     unsigned int receiver_identity_;  // 标识接收方的信息
     unsigned int check_sum_;  // 校验头部信息准确性
     std::string data_;  // 数据信息
-
 };
-Message ack_message(ControlType::kAck);
-Message make_ack();
+template<class Archive>
+void Message::serialize(Archive &ar,const uint version)
+{
+    ar & control_word_ & data_size_ & message_number_ & sender_identity_ &
+         receiver_identity_ & check_sum_ & data_ ;
+}
+
 } 
-//typedef enum{Control,Info,Debug,Warning,Error} MSGTYPE;
-// class Message
-// {
-// public:
-//     Message();
-//     Message(std::string time,MSGTYPE type,std::string moudle,std::string data);
-//     void set(std::string time,MSGTYPE type,std::string moudle,std::string data);
-//     template<class Archive>
-//     void serialize(Archive&ar,const uint version);
-//     std::string time;
-//     MSGTYPE type;
-//     std::string moudle;
-//     std::string data;
-// };
+
 #endif

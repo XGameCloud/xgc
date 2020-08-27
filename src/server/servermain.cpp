@@ -1,12 +1,12 @@
 #include<iostream>
 #include "server.h"
-#include "message.h"
 using namespace std;
 using namespace xgc::server;
 int main()
 {
-
-    Server listen_server;
+    cout<<"test"<<endl;
+    Server listen_server("49.232.17.128",17777);
     listen_server.Init();
     listen_server.WaitforConnect();
+
 }

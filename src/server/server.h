@@ -5,7 +5,7 @@
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/asio/ip/address.hpp>
 static const std::string kServerIp="49.232.17.128";
-static const int kListenPort=7777;
+static const int kListenPort=8888;
 namespace xgc
 {
 namespace server
@@ -16,6 +16,7 @@ public:
     Server(std::string ip=kServerIp,int port=kListenPort);
     void Init();
     int ConnectServer(std::string ip=kServerIp,int port=kListenPort);
+    bool AcceptorIsOpen();
     void WaitforConnect();
     void DisconnectServer();
     ~Server();

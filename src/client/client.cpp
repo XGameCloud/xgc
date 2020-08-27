@@ -16,7 +16,11 @@ Client::Client():ios_(),tcp_socket_(ios_){
     
 
 }
-void Client::Init(std::string ip=kServerIp,int port=kListenPort){
+Client::~Client()
+{
+    ;
+}
+void Client::Init(std::string ip,int port){
     xgclog<<"client starting."<<xgcendl;
     address addr=addr.from_string(ip);
     assert(addr.is_v4());
@@ -27,17 +31,20 @@ void Client::Init(std::string ip=kServerIp,int port=kListenPort){
     
 }
 
-int Client::ConnectServer(std::string ip=kServerIp,int listen_port=kListenPort){
+int Client::ConnectServer(std::string ip,int listen_port){
     xgclog<<"client connecting."<<xgcendl;
     tcp_socket_.connect(server_endpoint_);
-    string msg;
-    tcp_socket_.read_some(buffer(msg));
+    boost::array<char,1000> msgs;
+    tcp_socket_.read_some(buffer(msgs));
+    std::string msg=msgs.data();
+    cout<<"msgs:"<<msg<<endl;
     Message r_message=Serialization::disSerialize(msg);
     if(r_message.GetControlWord()==ControlType::kAck)
     {
         xgclog<<"recive from ip:"<<tcp_socket_.remote_endpoint().address()<<"\t port:"<<tcp_socket_.remote_endpoint().port()<<xgcendl;
         xgclog<<"recive ACK from server."<<xgcendl;
         xgclog<<"socket has been connected."<<xgcendl;
+        Message ack_message(ControlType::kAck);
         tcp_socket_.write_some(buffer(Serialization::serialize(ack_message)));
     }
 }
