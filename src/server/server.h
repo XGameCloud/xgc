@@ -16,8 +16,9 @@ public:
     Server(std::string ip=kServerIp,int port=kListenPort);
     void Init();
     int ConnectServer(std::string ip=kServerIp,int port=kListenPort);
-    bool AcceptorIsOpen();
+    bool IsAcceptorHasOpen();
     void WaitforConnect();
+    bool SendMessage();
     void DisconnectServer();
     ~Server();
 

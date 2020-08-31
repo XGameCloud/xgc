@@ -81,7 +81,7 @@ void Server::WaitforConnect()
     
 }
 
-bool Server::AcceptorIsOpen()
+bool Server::IsAcceptorHasOpen()
 {
     return server_acceptor_.is_open();
 }
